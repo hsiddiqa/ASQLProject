@@ -1,0 +1,22 @@
+C:\Users\hsiddiqa\Documents\SET-Sem4\AdvSQL\ASQL Project Milestone 1\ASQL Project Milestone 1\ASQL Project Configuration Tool\ASQL Project Configuration Tool\ASQL Project Configuration Tool\obj\Debug\MainWindow.g.cs
+C:\Users\hsiddiqa\Documents\SET-Sem4\AdvSQL\ASQL Project Milestone 1\ASQL Project Milestone 1\ASQL Project Configuration Tool\ASQL Project Configuration Tool\ASQL Project Configuration Tool\obj\Debug\App.g.cs
+C:\Users\hsiddiqa\Documents\SET-Sem4\AdvSQL\ASQL Project Milestone 1\ASQL Project Milestone 1\ASQL Project Configuration Tool\ASQL Project Configuration Tool\ASQL Project Configuration Tool\obj\Debug\ASQL Project Configuration Tool_MarkupCompile.cache
+C:\Users\hsiddiqa\Documents\SET-Sem4\AdvSQL\ASQL Project Milestone 1\ASQL Project Milestone 1\ASQL Project Configuration Tool\ASQL Project Configuration Tool\ASQL Project Configuration Tool\obj\Debug\ASQL Project Configuration Tool_MarkupCompile.lref
+C:\Users\hsiddiqa\Documents\SET-Sem4\AdvSQL\ASQL Project Milestone 1\ASQL Project Milestone 1\ASQL Project Configuration Tool\ASQL Project Configuration Tool\ASQL Project Configuration Tool\obj\Debug\MainWindow.baml
+C:\Users\hsiddiqa\Documents\SET-Sem4\AdvSQL\ASQL Project Milestone 1\ASQL Project Milestone 1\ASQL Project Configuration Tool\ASQL Project Configuration Tool\ASQL Project Configuration Tool\obj\Debug\ASQL Project Configuration Tool.g.resources
+C:\Users\hsiddiqa\Documents\SET-Sem4\AdvSQL\ASQL Project Milestone 1\ASQL Project Milestone 1\ASQL Project Configuration Tool\ASQL Project Configuration Tool\ASQL Project Configuration Tool\obj\Debug\ASQL Project Configuration Tool.pdb
+C:\AdvancedSQLProject\ASQL Project Configuration Tool\ASQL Project Configuration Tool\ASQL Project Configuration Tool\bin\Debug\ASQL Project Configuration Tool.exe.config
+C:\AdvancedSQLProject\ASQL Project Configuration Tool\ASQL Project Configuration Tool\ASQL Project Configuration Tool\bin\Debug\ASQL Project Configuration Tool.exe
+C:\AdvancedSQLProject\ASQL Project Configuration Tool\ASQL Project Configuration Tool\ASQL Project Configuration Tool\bin\Debug\ASQL Project Configuration Tool.pdb
+C:\AdvancedSQLProject\ASQL Project Configuration Tool\ASQL Project Configuration Tool\ASQL Project Configuration Tool\obj\Debug\MainWindow.g.cs
+C:\AdvancedSQLProject\ASQL Project Configuration Tool\ASQL Project Configuration Tool\ASQL Project Configuration Tool\obj\Debug\App.g.cs
+C:\AdvancedSQLProject\ASQL Project Configuration Tool\ASQL Project Configuration Tool\ASQL Project Configuration Tool\obj\Debug\ASQL Project Configuration Tool_MarkupCompile.cache
+C:\AdvancedSQLProject\ASQL Project Configuration Tool\ASQL Project Configuration Tool\ASQL Project Configuration Tool\obj\Debug\ASQL Project Configuration Tool_MarkupCompile.lref
+C:\AdvancedSQLProject\ASQL Project Configuration Tool\ASQL Project Configuration Tool\ASQL Project Configuration Tool\obj\Debug\MainWindow.baml
+C:\AdvancedSQLProject\ASQL Project Configuration Tool\ASQL Project Configuration Tool\ASQL Project Configuration Tool\obj\Debug\ASQL Project Configuration Tool.g.resources
+C:\AdvancedSQLProject\ASQL Project Configuration Tool\ASQL Project Configuration Tool\ASQL Project Configuration Tool\obj\Debug\ASQL_Project_Configuration_Tool.Properties.Resources.resources
+C:\AdvancedSQLProject\ASQL Project Configuration Tool\ASQL Project Configuration Tool\ASQL Project Configuration Tool\obj\Debug\ASQL Project Configuration Tool.csproj.GenerateResource.Cache
+C:\AdvancedSQLProject\ASQL Project Configuration Tool\ASQL Project Configuration Tool\ASQL Project Configuration Tool\obj\Debug\ASQL Project Configuration Tool.csproj.CoreCompileInputs.cache
+C:\AdvancedSQLProject\ASQL Project Configuration Tool\ASQL Project Configuration Tool\ASQL Project Configuration Tool\obj\Debug\ASQL Project Configuration Tool.exe
+C:\AdvancedSQLProject\ASQL Project Configuration Tool\ASQL Project Configuration Tool\ASQL Project Configuration Tool\obj\Debug\ASQL Project Configuration Tool.pdb
+C:\AdvancedSQLProject\ASQL Project Configuration Tool\ASQL Project Configuration Tool\ASQL Project Configuration Tool\obj\Debug\ASQL Project Configuration Tool.csprojResolveAssemblyReference.cache

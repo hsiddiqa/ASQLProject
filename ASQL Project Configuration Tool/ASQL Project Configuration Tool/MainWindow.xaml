@@ -1,0 +1,27 @@
+﻿<Window x:Class="ASQL_Project_Configuration_Tool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ASQL_Project_Configuration_Tool"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="515.132" Width="878.947">
+    <Grid>
+        <Label x:Name="ConfigurationMenu" Content="Configuration Manager" HorizontalAlignment="Left" Margin="282,60,0,0" VerticalAlignment="Top" FontSize="36"/>
+        <ListBox x:Name="ConfigurationListBox" HorizontalAlignment="Left" Height="198" Margin="86,199,0,0" VerticalAlignment="Top" Width="300" SelectionChanged="ConfigurationListBox_SelectionChanged"/>
+        <Label x:Name="ListTitle" Content="Current Configuration Paramaters" HorizontalAlignment="Left" Margin="141,168,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="CurrentValueLabel" Content="Current Value" HorizontalAlignment="Left" Margin="404,169,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.524,-0.097"/>
+        <TextBlock x:Name="ValueDisplayTextBlock" HorizontalAlignment="Left" Margin="404,200,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="82" Height="21"/>
+        <Label x:Name="NewValueLabel" Content="New Value:" HorizontalAlignment="Left" Margin="507,170,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="ValueTextBox" HorizontalAlignment="Left" Height="23" Margin="512,198,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="ChangeButton" Content="Update Value" HorizontalAlignment="Left" Margin="637,200,0,0" VerticalAlignment="Top" Width="101" Background="#FFD7D0D0" Click="ChangeButton_Click"/>
+        <Label x:Name="ResultLabel" Content="" HorizontalAlignment="Left" Margin="530,375,0,0" VerticalAlignment="Top" Width="226"/>
+        <Button x:Name="DefaultButton" Content="Set All Values to Default" HorizontalAlignment="Left" Margin="530,261,0,0" VerticalAlignment="Top" Width="187" Height="42" Click="DefaultButton_Click" FontSize="16"/>
+        <Label x:Name="ResultsTitle" Content="Results:" HorizontalAlignment="Left" Margin="576,324,0,0" VerticalAlignment="Top" Height="46" Width="87" FontSize="24"/>
+        <Label x:Name="label" Content="Value Max&#xD;&#xA;&#xD;&#xA;" HorizontalAlignment="Left" Margin="404,237,0,0" VerticalAlignment="Top" Width="82" Height="25"/>
+        <TextBlock x:Name="MaxTextBlock" HorizontalAlignment="Left" Margin="411,273,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <Label x:Name="MinLabel" Content="ValueMIn" HorizontalAlignment="Left" Margin="407,306,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBlock x:Name="MinTextBlock" HorizontalAlignment="Left" Margin="411,342,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>
