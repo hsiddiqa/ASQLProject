@@ -1,0 +1,7 @@
+C:\AdvancedSQLProject\ASQLProject\ASQL Project Configuration Tool\RunnerApplication\obj\Debug\RunnerApplication.csprojResolveAssemblyReference.cache
+C:\AdvancedSQLProject\ASQLProject\ASQL Project Configuration Tool\RunnerApplication\obj\Debug\RunnerApplication.csproj.CoreCompileInputs.cache
+C:\AdvancedSQLProject\ASQLProject\ASQL Project Configuration Tool\RunnerApplication\bin\Debug\RunnerApplication.exe.config
+C:\AdvancedSQLProject\ASQLProject\ASQL Project Configuration Tool\RunnerApplication\bin\Debug\RunnerApplication.exe
+C:\AdvancedSQLProject\ASQLProject\ASQL Project Configuration Tool\RunnerApplication\bin\Debug\RunnerApplication.pdb
+C:\AdvancedSQLProject\ASQLProject\ASQL Project Configuration Tool\RunnerApplication\obj\Debug\RunnerApplication.exe
+C:\AdvancedSQLProject\ASQLProject\ASQL Project Configuration Tool\RunnerApplication\obj\Debug\RunnerApplication.pdb
