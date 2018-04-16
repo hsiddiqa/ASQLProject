@@ -69,8 +69,6 @@ CREATE TABLE Station (
 CREATE TABLE Tray(
 	TrayNumber INT IDENTITY PRIMARY KEY,
 	TrayID VARCHAR(8), -- iN THE FORM FLxxxxxx  
-	ID VARCHAR(10),
-	CurrentLamps INT,
 	StationID INT,
 	FOREIGN KEY (StationID) REFERENCES Station(StationID)
 )
@@ -87,10 +85,8 @@ CREATE TABLE Lamp (
 	LampID VARCHAR(10) PRIMARY KEY,
 	Passed BIT,
 	TrayNumber INT,
-	StationID INT,
-	TimeCreated TIMESTAMP,
-	FOREIGN KEY (TrayNumber) REFERENCES Tray (TrayNumber),
-	FOREIGN KEY (StationID) REFERENCES Station (StationID)
+	TimeCreated DATETIME,
+	FOREIGN KEY (TrayNumber) REFERENCES Tray (TrayNumber)
 )
 
 -- create the Bin table
@@ -99,11 +95,10 @@ CREATE TABLE Bin (
 	StationID INT,
 	PartTypeID INT,
 	CurrentStock INT,
-	CommonTray BIT,
 	MaxCapacity INT,
 	LastRefilled TIMESTAMP,
 	FOREIGN KEY (StationID) REFERENCES Station (StationID),
-	FOREIGN KEY (PartTypeID) REFERENCES PartTypes (PartTypeID)
+	FOREIGN KEY (PartTypeID) REFERENCES PartType (PartTypeID)
 )
 
 
@@ -146,7 +141,8 @@ BEGIN
 			('HousingCapacity', 24),
 			('Lens', 40),
 			('BulbCapacity', 60),
-			('BezelCapacity', 75)
+			('BezelCapacity', 75),
+			('RunnerTime', 5)
 
 			-- we delete the part types table and set the default values 
 			DELETE FROM PartType
@@ -175,6 +171,8 @@ BEGIN
     RETURN @FinalResult
 END
 GO
+
+
 
 -- checks that the stored procedure was executed successfully. 
 -- A 0 means all is well, a 1 means that the stored procedure encountered an error
@@ -277,3 +275,167 @@ END
 GO
 
 
+-- Name: NewStation 
+-- Description: This creates a new station, along with the bins needed for it
+-- Inputs: workerType: Int : the type of wroker that is running this station
+-- Outputs: A table with the configuration settings and the ID of the workstation
+
+DROP PROCEDURE IF EXISTS NewStation
+GO
+
+CREATE PROCEDURE NewStation
+	@WorkerType INT
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+    SET XACT_ABORT ON; 
+
+
+	DECLARE @StationID INT
+	DECLARE @FinalResult INT = 0
+	DECLARE @TrayID INT = 0
+	
+
+
+	BEGIN TRY	
+		BEGIN TRANSACTION
+
+		-- attempt to insert the station into the database
+		INSERT INTO Station(StartTime,StationWorkerType, Active)
+		VALUES (GETDATE(), @WorkerType, 1)
+
+		-- get the SationID 
+		--SELECT @StationID = MAX(StationID) FROM Station
+		SET @StationID = SCOPE_IDENTITY()
+
+		-- now, we have to create the 6 bins for the station
+		INSERT INTO Bin(StationID, PartTypeID, CurrentStock, MaxCapacity)
+		VALUES (@StationID, 1, (SELECT ConfigurationValue FROM ConfigurationTable WHERE ConfigurationID=2), (SELECT ConfigurationValue FROM ConfigurationTable WHERE ConfigurationID=2)),
+		(@StationID, 2, (SELECT ConfigurationValue FROM ConfigurationTable WHERE ConfigurationID=3), (SELECT ConfigurationValue FROM ConfigurationTable WHERE ConfigurationID=3)),
+		(@StationID, 3, (SELECT ConfigurationValue FROM ConfigurationTable WHERE ConfigurationID=4), (SELECT ConfigurationValue FROM ConfigurationTable WHERE ConfigurationID=4)),
+		(@StationID, 4, (SELECT ConfigurationValue FROM ConfigurationTable WHERE ConfigurationID=5), (SELECT ConfigurationValue FROM ConfigurationTable WHERE ConfigurationID=5)),
+		(@StationID, 5, (SELECT ConfigurationValue FROM ConfigurationTable WHERE ConfigurationID=6), (SELECT ConfigurationValue FROM ConfigurationTable WHERE ConfigurationID=6)),
+		(@StationID, 6, (SELECT ConfigurationValue FROM ConfigurationTable WHERE ConfigurationID=7),  (SELECT ConfigurationValue FROM ConfigurationTable WHERE ConfigurationID=7))
+
+		
+		-- create a tray for that station
+		INSERT INTO Tray (StationID)
+		VALUES (@StationID)
+
+		-- find the ID of the tray we just inserted
+		SET @TrayID = SCOPE_IDENTITY()
+		
+		
+
+		-- update that tray to have a unique trayID
+		UPDATE Tray 
+		SET TrayID = ('FL' + RIGHT('000000'+CAST(@TrayID AS VARCHAR(6)),6))
+		WHERE TrayNumber = @TrayID
+
+
+		COMMIT TRANSACTION
+	END TRY
+	BEGIN CATCH
+		-- something went wrong, probably the user selected a setting that doesn't exist
+		IF @@TRANCOUNT > 0 ROLLBACK 
+		SET @FinalResult = 1
+
+		SELECT ERROR_MESSAGE()
+	END CATCH
+
+	-- if everything went as planned, return the ID of the station
+
+	SELECT @StationID
+	
+END 
+GO
+
+-- Name: AddLamp
+-- Description: This stored procedure allows a station to create a new lamp.
+-- Inputs: Int, the ID of the workstation that created that lamp
+-- outputs: Either a table of bin current capacaties, or the integer 1 if an error occured
+
+DROP PROCEDURE IF EXISTS AddLamp
+GO
+
+CREATE PROCEDURE AddLamp
+	@StationID INT
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+    SET XACT_ABORT ON; 
+
+	-- variable to hold the final result
+	DECLARE @FinalResult INT = 0
+
+	-- varaibles to help create the lamp ID
+	DECLARE @TrayID VARCHAR(8)
+	DECLARE @TrayNumber INT
+
+	-- variable to keep track of how many lamps the tray currently holds
+	DECLARE @LampNumber INT = 0
+
+	BEGIN TRY	
+		BEGIN TRANSACTION
+
+		
+		-- get the trayNumber from which we are passing the lamp into
+		SELECT @TrayNumber = MAX(TrayNumber) from Tray
+		WHERE StationID = @StationID
+
+
+		-- Get the TrayID for later
+		SELECT @TrayID = TrayID FROM Tray 
+		WHERE TrayNumber =@TrayNumber
+
+		
+
+		-- get the number of Lamps held by this tray
+		SELECT @LampNumber = COUNT(LampID) FROM Lamp WHERE TrayNumber = @TrayNumber
+		SET @LampNumber = @LampNumber + 1
+		-- create a new lamp by inserting it into the lamp table
+
+		INSERT INTO Lamp(LampID, TrayNumber, TimeCreated)
+		VALUES(@TrayID + CAST(@LampNumber AS varchar(2)), @TrayNumber, CURRENT_TIMESTAMP)
+		
+		-- if there are 60 or more lamps in the tray, we must insert a new one
+		IF @LampNumber >= 60
+			BEGIN
+				INSERT INTO Tray(TrayID, StationID)
+				VALUES (('FL' + RIGHT('000000'+CAST(@TrayID + 1 AS VARCHAR(6)),6)), @StationID)
+			END	
+
+
+		-- make sure to decriment all the bin values in the Station
+		UPDATE BIN 
+		SET CurrentStock = (CurrentStock - 1)
+		WHERE StationID = @StationID
+
+		-- return all the bin current volumes back to the station
+		SELECT PartTypeID, CurrentStock 
+		FROM Bin
+		WHERE StationID = @StationID
+
+		COMMIT TRANSACTION
+	END TRY
+	BEGIN CATCH
+		-- something went wrong, probably the user selected a setting that doesn't exist
+		IF @@TRANCOUNT > 0 ROLLBACK 
+		SET @FinalResult = 1
+
+		SELECT ERROR_MESSAGE()
+	END CATCH
+
+	-- if everything went as planned, return the Final Result
+
+	SELECT @FinalResult
+	
+END 
+GO
+
+-- **************************************DATABASE SETUP*******************
+-- call the stored procedure to set values to default values
+
+EXEC SetDefaults
