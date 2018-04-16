@@ -1,0 +1,7 @@
+C:\AdvancedSQLProject\ASQLProject\ASQL Project Configuration Tool\Workstation\bin\Debug\Workstation.exe.config
+C:\AdvancedSQLProject\ASQLProject\ASQL Project Configuration Tool\Workstation\bin\Debug\Workstation.exe
+C:\AdvancedSQLProject\ASQLProject\ASQL Project Configuration Tool\Workstation\bin\Debug\Workstation.pdb
+C:\AdvancedSQLProject\ASQLProject\ASQL Project Configuration Tool\Workstation\obj\Debug\Workstation.csprojResolveAssemblyReference.cache
+C:\AdvancedSQLProject\ASQLProject\ASQL Project Configuration Tool\Workstation\obj\Debug\Workstation.csproj.CoreCompileInputs.cache
+C:\AdvancedSQLProject\ASQLProject\ASQL Project Configuration Tool\Workstation\obj\Debug\Workstation.exe
+C:\AdvancedSQLProject\ASQLProject\ASQL Project Configuration Tool\Workstation\obj\Debug\Workstation.pdb
