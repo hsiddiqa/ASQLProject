@@ -1,4 +1,16 @@
-﻿using System;
+﻿/*
+* FILE			:		Program.cs
+* PROJECT		:		PROG3070 - Kanban
+* PROGRAMMER	:		Humaira Siddiqa (5523840)
+*                       Manuel Poppe Richter(7659402)
+* FIRST VERSION :		April 17th, 2018
+* DESCRIPTION	:		This application has been created to do a simulation of different workstation
+* of Kanban. This application will simulate the real time it takes for a runner to fill each bit periodically,
+* however it will be a bit faster since simulation is faster than real time. It will also run a simulation
+* of how each worker produces lamps and how fast they work. This file contains the workers efficiency,
+* adding work station each time the program runs and creating a lamp.
+*/
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -66,6 +78,10 @@ namespace Workstation
             }
         }
 
+        /// <summary>
+        /// This function handles the adding lamp to the database.
+        /// </summary>
+        /// <param name="WorkStationID"></param>
         void AddLamp(int WorkStationID)
         {
             //WorkStationID = 1;
@@ -98,6 +114,15 @@ namespace Workstation
             }
         }
 
+        /// <summary>
+        /// This function handles the code for making the lamp. Depending on the worker type, the time
+        /// each of them are going to take and their current efficiency, the function is going to 
+        /// calculate how many lamps will be made.
+        /// </summary>
+        /// <param name="typeOfWorker"></param>
+        /// <param name="timeScale"></param>
+        /// <param name="randNumGenerator"></param>
+        /// <returns></returns>
         bool MakeLamp (string typeOfWorker, int timeScale, Random randNumGenerator)
         {
             //this variable is in seconds since we are going to compare the time to build a lamp with super worker
@@ -141,6 +166,12 @@ namespace Workstation
             return true;
         }
 
+        /// <summary>
+        /// This function handles the situation of creating a workstation for each worker depending
+        /// on the worker type
+        /// </summary>
+        /// <param name="WorkerType"></param>
+        /// <returns></returns>
         int AddNewWorkStation(string WorkerType)
         {
             int workStationId = 0;
@@ -182,6 +213,10 @@ namespace Workstation
             return workStationId;
         }
 
+        /// <summary>
+        /// This function retrieves the timescale from the database that are currently being set.
+        /// </summary>
+        /// <returns></returns>
         int RetrieveTimeScale()
         {
             int timeScale = 0;

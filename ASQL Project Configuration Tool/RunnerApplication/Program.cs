@@ -1,4 +1,17 @@
-﻿using System;
+﻿/*
+* FILE			:		Program.cs
+* PROJECT		:		PROG3070 - Kanban
+* PROGRAMMER	:		Humaira Siddiqa (5523840)
+*                       Manuel Poppe Richter(7659402)
+* FIRST VERSION :		April 17th, 2018
+* DESCRIPTION	:		This application has been created to do a simulation of different workstation
+* of Kanban. This application will simulate the real time it takes for a runner to fill each bit periodically,
+* however it will be a bit faster since simulation is faster than real time. It will also run a simulation
+* of how each worker produces lamps and how fast they work. This file contains the code for the runners
+* simulation where the run comes and re-fills the bit every five minutes.
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,7 +47,11 @@ namespace RunnerApplication
             }
         }
 
-
+        /// <summary>
+        /// This function calculates the timescale for the runner. It collects the actual
+        /// time scale from the database in order to do the simulation here.
+        /// </summary>
+        /// <returns> It returns an int</returns>
         int RetrieveTimeScale()
         {
             int timeScale = 0;
@@ -63,6 +80,9 @@ namespace RunnerApplication
             return timeScale;
         }
 
+        /// <summary>
+        /// This function calls for runners update to get the current status of the runner.
+        /// </summary>
         void CallRunnerUpdate()
         {
             using (SqlConnection connection = new SqlConnection())

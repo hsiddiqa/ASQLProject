@@ -1,9 +1,9 @@
 ﻿/*
  *  FileName: MainWindow.xaml.cs 
  *  Project: Advanced SQL Project Milestone #1
- *  Date: Monday march 2nd, 2018 
- *  Programmers: Manuel Poppe Richter 
- *               Humaira Siddiqa
+ *  Date: Monday April 17th, 2018 
+ *  Programmers: Humaira Siddiqa (5523840)
+ *               Manuel Poppe Richter(7659402)
  *  Description: This is the Main Window file. It creates the application window that the user will be using, and contains
  *  the code for every event that the user can trigger in the applcation. This App allows the user to connect to the ASQL project database, and view and 
  * change the configuration settings of the configuration table. 
