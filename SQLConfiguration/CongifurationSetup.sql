@@ -256,10 +256,14 @@ BEGIN
 	BEGIN TRY	
 
 		-- Update all the Station Bins that have 5 or less parts
-		UPDATE BIN 
+		UPDATE Bin
 		SET CurrentStock = (CurrentStock + MaxCapacity)
-		WHERE
-		CurrentStock <= 5
+		FROM Bin
+		INNER JOIN Station 
+		ON Station.StationID = Bin.StationID
+		WHERE CurrentStock <= 5 AND Active = 1
+
+
 
 	END TRY
 	BEGIN CATCH
@@ -351,6 +355,42 @@ BEGIN
 END 
 GO
 
+-- Name: PassCheck
+-- Description: Randomizes the lamp pass/fail check, returns the output depending on the type of worker passed into it
+-- Inputs: Worker Type, Int, an int corrosponding to the type of worker who created this lamp
+-- Outputs: Bit, 1 if the lamp passed, 0 if it failed
+
+DROP PROCEDURE IF EXISTS PassCheck
+GO
+
+CREATE PROCEDURE PassCheck 
+	@WorkerType INT
+
+AS
+BEGIN
+	-- declare a bit for final result
+	DECLARE @Result BIT
+
+	-- check what type of worker we have, and get the percentage for it
+	DECLARE @Chance DECIMAL 
+	DECLARE @RandomResult DECIMAL
+
+	SELECT @Chance = ErrorChance FROM StationWorkerType 
+	WHERE StationWorkerTypeID = @WorkerType
+
+	-- check if the random number is below the error threshold
+
+	IF (RAND() * 100)  < @Chance
+		SET @Result = 0
+	ELSE
+		SET @Result = 1
+
+	-- return the result
+	RETURN @Result
+END;
+
+GO
+
 -- Name: AddLamp
 -- Description: This stored procedure allows a station to create a new lamp.
 -- Inputs: Int, the ID of the workstation that created that lamp
@@ -395,10 +435,21 @@ BEGIN
 		-- get the number of Lamps held by this tray
 		SELECT @LampNumber = COUNT(LampID) FROM Lamp WHERE TrayNumber = @TrayNumber
 		SET @LampNumber = @LampNumber + 1
+
+		-- get the percentage change that lamp failed
+
+		DECLARE @Pass BIT
+		DECLARE @WorkerType INT
+
+		SELECT @WorkerType = StationWorkerType FROM Station 
+		WHERE StationID = @StationID
+
+		EXEC @Pass= PassCheck @WorkerType
+
 		-- create a new lamp by inserting it into the lamp table
 
-		INSERT INTO Lamp(LampID, TrayNumber, TimeCreated)
-		VALUES(@TrayID + CAST(@LampNumber AS varchar(2)), @TrayNumber, CURRENT_TIMESTAMP)
+		INSERT INTO Lamp(LampID, TrayNumber, Passed, TimeCreated)
+		VALUES(@TrayID + CAST(@LampNumber AS varchar(2)), @TrayNumber, @Pass,CURRENT_TIMESTAMP)
 		
 		-- if there are 60 or more lamps in the tray, we must insert a new one
 		IF @LampNumber >= 60
@@ -428,12 +479,62 @@ BEGIN
 		SELECT ERROR_MESSAGE()
 	END CATCH
 
+
+	
+END 
+GO
+
+
+-- Name: ShutDownStations
+-- Description: "Shuts Down" the simulation, setting all workstations to Inactive
+-- Inputs: None
+-- Outpuse: None
+DROP PROCEDURE IF EXISTS ShutDownStations
+GO
+
+CREATE PROCEDURE ShutDownStations
+	@StationID INT
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+    SET XACT_ABORT ON; 
+
+	-- variable to hold the final result
+	DECLARE @FinalResult INT = 0
+
+
+	BEGIN TRY	
+		BEGIN TRANSACTION
+
+		-- find all the stations that are running, and shut them off
+
+
+		UPDATE Station
+		SET Active = 0
+		FROM Station
+		WHERE Active = 1
+		
+		COMMIT TRANSACTION
+	END TRY
+	BEGIN CATCH
+		-- something went wrong, probably the user selected a setting that doesn't exist
+		IF @@TRANCOUNT > 0 ROLLBACK 
+		SET @FinalResult = 1
+
+		SELECT ERROR_MESSAGE()
+	END CATCH
+
 	-- if everything went as planned, return the Final Result
 
 	SELECT @FinalResult
 	
 END 
 GO
+
+
+
+
 
 -- **************************************DATABASE SETUP*******************
 -- call the stored procedure to set values to default values
